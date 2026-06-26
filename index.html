@@ -2,609 +2,862 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Angel‑in‑Pocket — персональный AI‑ангел с гибкой подпиской</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description"
-        content="Персональный билингвальный (RU/EN) AI‑ассистент Angel‑in‑Pocket. Работает в Telegram и через веб, подписка: Telegram Stars, карта МИР Сбера и другие способы оплаты.">
+  <title>Angel-in-Pocket 2.0 — карманный AI-ангел / Pocket AI Angel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Angel-in-Pocket 2.0 — центральный AI-агент с GRA stability, для бизнеса, науки и творчества. Bilingual RU/EN landing page.">
   <style>
     :root {
-      --bg: #05060a;
-      --bg-alt: #0b0e16;
-      --accent: #4f8cff;
-      --accent2: #40c572;
-      --text: #f5f5f7;
-      --muted: #a3a7b7;
-      --border: #25283a;
-      --radius: 14px;
+      --bg: #050816;
+      --bg-alt: #0b1120;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56,189,248,0.12);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --card: #111827;
+      --border: #1f2937;
+      --radius: 12px;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --warning: #f97373;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background: radial-gradient(circle at top, #171b2b 0, #05060a 55%);
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #1f2937 0, var(--bg) 40%, #020617 100%);
       color: var(--text);
-      line-height: 1.6;
     }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
-
-    .page {
-      max-width: 960px;
+    .container {
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 24px 16px 48px;
+      padding: 0 16px;
     }
-
     header {
+      border-bottom: 1px solid rgba(148,163,184,0.16);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(5,8,22,0.92);
+    }
+    .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 32px;
+      padding: 10px 0;
     }
     .logo {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 14px;
+      color: var(--accent);
+    }
+    .nav-right {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .logo-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      background: radial-gradient(circle at 20% 20%, #ffffff, #4f8cff 55%, #171b2b 100%);
-      box-shadow: 0 0 18px rgba(79,140,255,0.7);
-    }
-    .logo-title { font-weight: 650; letter-spacing: .04em; font-size: 14px; text-transform: uppercase; }
-    .logo-sub { font-size: 12px; color: var(--muted); }
-
-    .lang-switch {
-      font-size: 13px;
-      color: var(--muted);
+    .nav-links {
       display: flex;
-      align-items: center;
-      gap: 6px;
+      gap: 18px;
+      font-size: 14px;
     }
-    .lang-switch button {
-      background: transparent;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.2);
+    .nav-links a {
       color: var(--muted);
-      padding: 4px 10px;
+    }
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+    .lang-switch {
+      display: inline-flex;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      overflow: hidden;
       font-size: 12px;
+    }
+    .lang-btn {
+      padding: 4px 10px;
+      background: transparent;
+      color: var(--muted);
+      border: none;
       cursor: pointer;
     }
-    .lang-switch button.active {
-      border-color: var(--accent);
-      background: rgba(79,140,255,.2);
-      color: #e6ecff;
+    .lang-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
     }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
-      gap: 24px;
-      padding: 24px 20px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(79,140,255,.18), rgba(5,6,10,.95));
-      border: 1px solid rgba(79,140,255,.4);
-      box-shadow: 0 24px 60px rgba(0,0,0,.7);
-      margin-bottom: 28px;
-    }
-    .hero-title { font-size: 28px; font-weight: 750; margin: 0 0 10px; }
-    .hero-sub { font-size: 15px; color: var(--muted); margin: 0 0 18px; }
-    .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-    .badge {
-      font-size: 11px; text-transform: uppercase; letter-spacing: .12em;
-      padding: 4px 9px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(5,6,10,.7); color: var(--muted);
-    }
-    .badge-accent {
-      border-color: rgba(79,140,255,.7);
-      background: rgba(79,140,255,.16);
-      color: #e6ecff;
-    }
-    .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 10px 18px;
+      gap: 6px;
       border-radius: 999px;
-      border: 1px solid transparent;
+      border: 1px solid var(--accent);
+      padding: 10px 18px;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
+      background: var(--accent);
+      color: #0f172a;
+      box-shadow: 0 10px 30px rgba(56,189,248,0.35);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
     }
-    .btn-primary {
-      background: linear-gradient(135deg,#4f8cff,#7e7bff);
-      color: #fff;
-      box-shadow: 0 14px 34px rgba(79,140,255,.7);
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(56,189,248,0.45);
+      background: #0ea5e9;
     }
-    .btn-primary:hover { filter: brightness(1.05); }
-    .btn-ghost {
-      background: rgba(5,6,10,.7);
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border-color: var(--border);
+      box-shadow: none;
+    }
+    .btn-outline:hover {
+      background: var(--accent-soft);
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.2);
+    }
+    .btn-disabled {
+      background: rgba(30,64,175,0.12);
       color: var(--muted);
-      border-color: rgba(255,255,255,.18);
+      border-color: var(--border);
+      box-shadow: none;
+      cursor: not-allowed;
     }
-    .hero-note { font-size: 12px; color: var(--muted); }
-
-    .hero-card {
-      padding: 14px 14px 12px;
-      border-radius: 16px;
-      background: rgba(5,6,10,.9);
-      border: 1px solid rgba(255,255,255,.08);
-      font-size: 13px;
+    main {
+      padding-bottom: 64px;
     }
-    .hero-card h3 { margin: 0 0 8px; font-size: 14px; }
-    .hero-card-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 8px;
+    section {
+      padding: 40px 0;
+    }
+    .hero {
+      padding-top: 48px;
+      padding-bottom: 32px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 32px;
       align-items: center;
     }
-    .hero-pill {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.08);
-      color: var(--muted);
-    }
-    .hero-pill-ru { border-color: rgba(255,255,255,.25); }
-    .hero-pill-en { border-color: rgba(79,140,255,.7); color: #dde5ff; }
-
-    .section {
-      margin-bottom: 24px;
-      padding: 18px 16px;
-      border-radius: var(--radius);
-      background: rgba(5,6,10,.9);
-      border: 1px solid var(--border);
-    }
-    .section h2 { margin: 0 0 8px; font-size: 20px; }
-    .section p { margin: 0 0 10px; font-size: 14px; color: var(--muted); }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-      gap: 12px;
-    }
-    .feature {
-      padding: 12px;
-      border-radius: 12px;
-      background: rgba(11,13,22,.9);
-      border: 1px solid rgba(255,255,255,.06);
-      font-size: 13px;
-    }
-    .feature h3 { margin: 0 0 6px; font-size: 14px; }
-
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-      gap: 12px;
-      margin-top: 8px;
-    }
-    .plan {
-      padding: 12px;
-      border-radius: 12px;
-      background: rgba(11,13,22,.9);
-      border: 1px solid rgba(255,255,255,.08);
-      font-size: 13px;
-    }
-    .plan-title { font-weight: 600; margin-bottom: 4px; }
-    .plan-price { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
-    .plan-note { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-    .plan-list { margin: 0; padding-left: 16px; font-size: 13px; color: var(--muted); }
-    .plan-list li { margin-bottom: 4px; }
-
-    .faq-item { margin-bottom: 8px; font-size: 13px; }
-    .faq-q { font-weight: 600; }
-    .faq-a { color: var(--muted); }
-
-    .muted { color: var(--muted); font-size: 13px; }
-    .center { text-align: center; }
-
-    footer {
-      margin-top: 16px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      font-size: 11px;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    @media (max-width: 720px) {
-      .hero {
-        grid-template-columns: 1fr;
-        padding: 20px 14px;
+    @media (max-width: 880px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
       }
-      .page { padding: 16px 10px 32px; }
+      header { position: static; }
     }
+    .hero-eyebrow {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .hero-title {
+      font-size: 32px;
+      line-height: 1.15;
+      margin: 0 0 12px;
+    }
+    .hero-subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      max-width: 620px;
+    }
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .badge {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.35);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .hero-note {
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 460px;
+    }
+    .hero-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 16px 40px rgba(15,23,42,0.75);
+    }
+    .hero-card-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .hero-chip {
+      background: var(--bg-alt);
+      border-radius: 999px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-title {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+    .section-subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 580px;
+      margin-bottom: 20px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    @media (max-width: 880px) {
+      .grid-3 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px 14px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+    }
+    .card p {
+      margin: 0 0 10px;
+      color: var(--muted);
+    }
+    .card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .divider {
+      border-top: 1px dashed rgba(148,163,184,0.3);
+      margin: 24px 0;
+    }
+    .pricing {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 880px) {
+      .pricing {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+    .price-tag {
+      font-size: 26px;
+      font-weight: 700;
+    }
+    .label-soft {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .list-inline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .form-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px 14px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 4px;
+      color: var(--muted);
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px 9px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #020617;
+      color: var(--text);
+      font-size: 13px;
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .form-note {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .stub {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--warning);
+    }
+    footer {
+      border-top: 1px solid rgba(148,163,184,0.18);
+      padding: 16px 0 22px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+    }
+    .lang-block { display: none; }
+    .lang-block.active { display: block; }
   </style>
 </head>
 <body>
-<div class="page">
   <header>
-    <div class="logo">
-      <div class="logo-mark"></div>
-      <div>
-        <div class="logo-title">ANGEL‑IN‑POCKET</div>
-        <div class="logo-sub" data-i18n="tagline">
-          Персональный RU/EN AI‑ангел с гибкой подпиской
+    <div class="container">
+      <div class="nav">
+        <div class="logo">Angel-in-Pocket 2.0</div>
+        <div class="nav-right">
+          <nav class="nav-links">
+            <a href="#benefits">Benefits</a>
+            <a href="#domains">Domains</a>
+            <a href="#gra">GRA</a>
+            <a href="#pricing">Pricing</a>
+          </nav>
+          <div class="lang-switch">
+            <button class="lang-btn active" data-lang="ru">RU</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+          </div>
+          <a href="#cta" class="btn">Demo</a>
         </div>
       </div>
-    </div>
-    <div class="lang-switch">
-      <span>Language:</span>
-      <button id="btn-ru" class="active" onclick="setLang('ru')">RU</button>
-      <button id="btn-en" onclick="setLang('en')">EN</button>
     </div>
   </header>
 
   <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div>
-        <div class="hero-badges">
-          <span class="badge badge-accent" data-i18n="badge_ai">RU / EN AI‑ассистент</span>
-          <span class="badge" data-i18n="badge_where">Телеграм‑бот + веб</span>
-          <span class="badge" data-i18n="badge_pay">Подписка: Stars, карта МИР, крипта</span>
+    <!-- RU BLOCK -->
+    <div id="lang-ru" class="lang-block active">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <div class="hero-eyebrow">Центральный AI‑агент нового поколения</div>
+            <h1 class="hero-title">Карманный ангел для бизнеса, науки и творчества</h1>
+            <p class="hero-subtitle">
+              Angel‑in‑Pocket 2.0 — это не чатбот, а центральный агент принятия решений. Он помогает зарабатывать, понимать и создавать, а слой GRA‑устойчивости обнуляет слабые сценарии до того, как они успеют навредить.
+            </p>
+            <div class="hero-badges">
+              <div class="badge"><span class="badge-dot"></span> Бизнес: «купи дешевле — продай дороже»</div>
+              <div class="badge"><span class="badge-dot"></span> Наука: гипотезы, данные, эксперименты</div>
+              <div class="badge"><span class="badge-dot"></span> Искусство: текст, музыка, визуал</div>
+            </div>
+            <div class="hero-actions">
+              <a href="#cta" class="btn">Получить личного ангела</a>
+              <a href="https://github.com/qqewq/Angel-in-Pocket-2.0" class="btn btn-outline" target="_blank">Открытый код на GitHub</a>
+            </div>
+            <p class="hero-note">
+              Идея «ангела в кармане» уже звучала в публичных выступлениях Гарретта Джонстона. Angel‑in‑Pocket 2.0 — моя open‑source реализация этой публичной концепции: архитектура, модули, GRA‑бэкенд и конкретный код.
+            </p>
+          </div>
+          <div>
+            <div class="hero-card">
+              <div class="hero-card-title">
+                Ежедневный момент истины
+                <span class="hero-chip"><span class="badge-dot"></span> GRA‑обнулёнка</span>
+              </div>
+              <div class="hero-card-grid">
+                <div>
+                  <strong>Бизнес</strong><br>
+                  ▸ Цены и маржа<br>
+                  ▸ Подписки и удержание<br>
+                  ▸ Тактика и стратегия
+                </div>
+                <div>
+                  <strong>Интеллект</strong><br>
+                  ▸ Символическая логика<br>
+                  ▸ Нейросетевые модели<br>
+                  ▸ Личная этика и стиль
+                </div>
+                <div>
+                  <strong>Наука</strong><br>
+                  ▸ Данные и эксперименты<br>
+                  ▸ Гипотезы и модели<br>
+                  ▸ Активное обучение
+                </div>
+                <div>
+                  <strong>Искусство</strong><br>
+                  ▸ Тексты и поэзия<br>
+                  ▸ Музыка и визуал<br>
+                  ▸ Эстетические метрики
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <h1 class="hero-title" data-i18n="hero_title">
-          Персональный AI‑ангел, который работает там, где удобно вам
-        </h1>
-        <p class="hero-sub" data-i18n="hero_sub">
-          Angel‑in‑Pocket — билингвальный ассистент на RU/EN, который живёт в Telegram и веб‑интерфейсе,
-          помнит ваш контекст и продаётся по подписке: внутри Telegram Stars или через внешнюю оплату картой (включая МИР Сбера) и криптой. [web:155][web:162][web:189][web:192]
-        </p>
+      </section>
 
-        <div class="hero-cta">
-          <!-- Заглушка на телегу -->
-          <a href="#" class="btn btn-primary" data-i18n="btn_telegram">
-            Скоро в Telegram
-          </a>
-          <!-- Кнопка оплаты картой МИР / картой вообще -->
-          <a href="https://pay.your-domain.com/angel-mir" class="btn btn-ghost" data-i18n="btn_external">
-            Оплатить картой МИР / картой
-          </a>
+      <section id="benefits">
+        <div class="container">
+          <h2 class="section-title">Что делает ваш ангел каждый день</h2>
+          <p class="section-subtitle">
+            Один агент, три задачи: помогает зарабатывать, помогает разбираться и помогает создавать. Всё это — без магии, только за счёт прозрачной архитектуры.
+          </p>
+          <div class="grid-3">
+            <div class="card">
+              <h3>Зарабатывать больше</h3>
+              <p>Ангел ищет сценарии «купить дешевле — продать дороже», предлагает тарифы подписок и показывает, какие продукты реально тянут прибыль.</p>
+              <ul>
+                <li>Анализ цен, спроса и маржи</li>
+                <li>Подписки с MRR/ARR и оттоком</li>
+                <li>Фокус на выгодных сценариях</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Разбираться глубже</h3>
+              <p>Научный слой работает как исследователь: подбирает эксперименты, проверяет гипотезы, объясняет результаты и хранит знания в структурированном виде.</p>
+              <ul>
+                <li>Автоматизация дизайн‑экспериментов</li>
+                <li>Symbolic regression и анализ данных</li>
+                <li>Отчёты в человеко‑читаемом виде</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Создавать сильнее</h3>
+              <p>Творческий слой помогает писать, рисовать и компонировать так, чтобы работа была и красивой, и попадающей в нужное настроение.</p>
+              <ul>
+                <li>Тексты, поэзия и нарративы</li>
+                <li>Музыка и цветовые палитры</li>
+                <li>Эстетические функции потерь для качества</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="hero-note" data-i18n="hero_note">
-          Сейчас мы собираем список раннего доступа. На старте вы сможете платить как внутри Telegram (Stars),
-          так и внешними платежами: картой МИР Сбера, другими картами и криптой — в зависимости от вашего платёжного провайдера. [web:155][web:189][web:192][web:168]
-        </div>
-      </div>
+      </section>
 
-      <aside class="hero-card">
-        <h3 data-i18n="hero_card_title">Как это будет работать</h3>
-        <div class="hero-card-row">
-          <span class="hero-pill hero-pill-ru" data-i18n="hero_pill_ru">RU / ₽ / МИР / Stars</span>
-          <span class="hero-pill hero-pill-en" data-i18n="hero_pill_en">EN / $ / € / Crypto</span>
+      <section id="domains">
+        <div class="container">
+          <div class="divider"></div>
+          <h2 class="section-title">Один ангел — четыре домена</h2>
+          <p class="section-subtitle">
+            Angel‑in‑Pocket 2.0 видит деньги, процессы, знания и творчество как части единой системы. Вы перестаёте жить в разрозненных таблицах и чатах.
+          </p>
+          <div class="grid-3">
+            <div class="card">
+              <h3>Бизнес и финансы</h3>
+              <p>Модули для продаж, маркетинга, бухгалтерии и налогов. Ангел знает вашу P&L и подсказывает, какие ветви бизнес‑модели стоит обнулить.</p>
+              <span class="pill">CRM · воронка · отчётность</span>
+            </div>
+            <div class="card">
+              <h3>Наука и производство</h3>
+              <p>Слой для работы с экспериментами, данными, себестоимостью и производством. Ангел видит реальную экономику процессов, а не только выручку.</p>
+              <span class="pill">данные · эксперименты · себестоимость</span>
+            </div>
+            <div class="card">
+              <h3>Искусство и контент</h3>
+              <p>Создание и кураторство текстов, музыки и визуалов. Ангел может быть соавтором, редактором или арт‑директором, оставаясь в рамках ваших ценностей.</p>
+              <span class="pill">копирайт · музыка · визуал</span>
+            </div>
+          </div>
         </div>
-        <p class="muted" data-i18n="hero_card_text">
-          Вы выбираете, где платить: прямо в Telegram (Stars) или через внешний платёж (карта МИР Сбера, другие карты, крипта).
-          Angel‑in‑Pocket просто видит, что ваша подписка активна, и даёт полный доступ к функциям. [web:155][web:189][web:168]
-        </p>
-      </aside>
-    </section>
+      </section>
 
-    <!-- RU SECTIONS -->
-    <section class="section" data-lang="ru">
-      <h2>Кому подходит Angel‑in‑Pocket</h2>
-      <div class="features">
-        <div class="feature">
-          <h3>Разработчики и исследователи</h3>
-          <p>Быстрые эксперименты с персональным ассистентом на RU/EN: свои промпты, свои датасеты, свои метрики. Можно встроить в любую инфраструктуру.</p>
+      <section id="gra">
+        <div class="container">
+          <div class="divider"></div>
+          <h2 class="section-title">Слой GRA‑устойчивости: зачем нужна обнулёнка</h2>
+          <p class="section-subtitle">
+            ИИ легко генерирует идеи, но редко умеет отбрасывать плохие. GRA‑слой анализирует сценарии, ищет противоречия и убирает ветви, которые несут больше риска, чем пользы.
+          </p>
+          <div class="grid-3">
+            <div class="card">
+              <h3>Оценка сценариев</h3>
+              <p>Стратегии, гипотезы и кампании прогоняются через GRA‑Core. Система ищет слабые места ещё до запуска.</p>
+              <ul>
+                <li>Иерархические метрики устойчивости</li>
+                <li>Сравнение альтернативных ветвей</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Обнуление и пересборка</h3>
+              <p>Нестабильные сценарии обнуляются и пересобираются. Ангел учится на ошибках и со временем оставляет только сильные решения.</p>
+              <ul>
+                <li>Удаление неустойчивых веток</li>
+                <li>Пересборка с учётом опыта</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Прозрачность решений</h3>
+              <p>Каждое важное решение можно объяснить: какие данные использованы, какие метрики сработали и почему выбрана именно эта ветвь.</p>
+              <ul>
+                <li>Отчёты по устойчивости</li>
+                <li>Логика, понятная человеку</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="feature">
-          <h3>Основатели и соло‑фаундеры</h3>
-          <p>Идеи, гипотезы, лендинги, письма, питчи инвесторам — в одном “кармане”, который помнит контекст и не теряет ваши мысли.</p>
-        </div>
-        <div class="feature">
-          <h3>Авторы и аналитики</h3>
-          <p>Длинные тексты, сводки, отчёты, переводы. Ассистент помогает думать, а не просто “генерировать текст на шаблоне”.</p>
-        </div>
-        <div class="feature">
-          <h3>Маленькие команды</h3>
-          <p>Общий AI‑ангел для чата, быстрых черновиков, сводок по задачам и простых интеграций с вашим стэком.</p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" data-lang="ru">
-      <h2>Функции, за которые вы платите</h2>
-      <div class="features">
-        <div class="feature">
-          <h3>Билингвальность RU/EN</h3>
-          <p>Ассистент понимает русские и английские запросы, отвечает на языке пользователя и спокойно переваривает смешанные диалоги.</p>
-        </div>
-        <div class="feature">
-          <h3>Память и “карманы”</h3>
-          <p>Angel‑in‑Pocket не живёт “одним сообщением”. У него есть карманы‑проекты, где он помнит контекст, заметки, решения и промежуточные выводы.</p>
-        </div>
-        <div class="feature">
-          <h3>Гибкие подписки</h3>
-          <p>Подписка может оплачиваться внутри Telegram Stars, картой МИР Сбера и другими картами через эквайринг, а также криптой — логика одна, каналы оплаты разные. [web:155][web:189][web:192][web:168]</p>
-        </div>
-        <div class="feature">
-          <h3>Готовый Telegram‑интерфейс</h3>
-          <p>Полноценный Telegram‑бот с биллингом и поддержкой внешних платёжных событий. Вы не перепридумываете мессенджер‑UX. [web:155][web:160]</p>
-        </div>
-      </div>
-    </section>
+      <section id="pricing">
+        <div class="container">
+          <div class="divider"></div>
+          <h2 class="section-title">Доступ и платная подписка</h2>
+          <p class="section-subtitle">
+            Базовый уровень — open‑source: можно изучать код, форкать репозиторий и собирать свою версию. Платная подписка на Angel‑in‑Pocket 2.0 сейчас в разработке, до запуска доступ организуется вручную.
+          </p>
+          <div class="pricing">
+            <div>
+              <div class="label-soft">Базовый уровень</div>
+              <div class="price-tag">Open‑Source доступ</div>
+              <p class="section-subtitle">
+                Базовая архитектура центрального агента доступна бесплатно как репозиторий на GitHub. Вы можете форкать, менять и развивать систему под свои задачи.
+              </p>
+              <div class="list-inline">
+                <span>✓ GitHub‑репозиторий</span>
+                <span>✓ документация и примеры</span>
+                <span>✓ возможность доработки под себя</span>
+              </div>
 
-    <section class="section" data-lang="ru">
-      <h2>Как будет устроена подписка</h2>
-      <p>
-        Angel‑in‑Pocket умышленно не привязан к одному платёжному решению. Внутри Telegram он использует встроенные платежи и Star‑подписки,
-        а снаружи — веб‑хуки от вашего платёжного провайдера или крипто‑шлюза. Для пользователя это просто выбор: “оплатить в телеге” или “оплатить вне её”. [web:155][web:160][web:159][web:168]
-      </p>
+              <div class="divider"></div>
+              <div class="label-soft">Платная подписка (заглушка)</div>
+              <div class="price-tag">Angel‑in‑Pocket Pro</div>
+              <p class="section-subtitle">
+                Планируется платная подписка с дополнительными модулями, инфраструктурой и поддержкой. Сейчас подписка не активна: подключение происходит вручную по запросу.
+              </p>
+              <div class="list-inline">
+                <span>✓ приоритетная поддержка (после запуска)</span>
+                <span>✓ кастомизация под ваш бизнес</span>
+                <span>✓ выделенные окружения и интеграции</span>
+              </div>
+              <p class="stub">
+                Подписка пока не активна. Этот блок — заглушка: тарифы и автоматическая оплата появятся только после официального запуска.
+              </p>
+            </div>
+            <div class="form-card" id="cta">
+              <h3>Оставить заявку на демо</h3>
+              <p>Заполните форму — я свяжусь с вами и покажу, как ангела подключить именно к вашему бизнесу, проекту или лаборатории.</p>
+              <form>
+                <div class="form-group">
+                  <label for="name-ru">Имя</label>
+                  <input id="name-ru" type="text" name="name" placeholder="Как к вам обращаться?">
+                </div>
+                <div class="form-group">
+                  <label for="contact-ru">Email или Telegram</label>
+                  <input id="contact-ru" type="text" name="contact" placeholder="Контакт для ответа">
+                </div>
+                <div class="form-group">
+                  <label for="about-ru">Чем вы занимаетесь?</label>
+                  <textarea id="about-ru" name="about" placeholder="Коротко опишите: бизнес, наука, творчество или всё сразу."></textarea>
+                </div>
+                <button type="submit" class="btn" style="width:100%;margin-top:6px;">Отправить заявку</button>
+                <div class="form-note">
+                  Форма не привязана к конкретному бэкенду. Подключите свою обработку (email, CRM, бот) под свою инфраструктуру.
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
 
-      <div class="plans">
-        <div class="plan">
-          <div class="plan-title">Free</div>
-          <div class="plan-price">0 ₽ / 0 $</div>
-          <div class="plan-note">Чтобы попробовать без риска</div>
-          <ul class="plan-list">
-            <li>Ограниченный лимит запросов и контекста.</li>
-            <li>Доступ к основным функциям ассистента.</li>
-            <li>Активация одним нажатием, когда бот будет открыт.</li>
-          </ul>
+    <!-- EN BLOCK -->
+    <div id="lang-en" class="lang-block">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <div class="hero-eyebrow">Central next‑gen AI agent</div>
+            <h1 class="hero-title">A pocket‑sized angel for business, science and art</h1>
+            <p class="hero-subtitle">
+              Angel‑in‑Pocket 2.0 is not a chatbot. It is a central decision‑making agent that helps you earn more, understand more and create more, while a GRA‑based stability layer prunes weak scenarios before they can hurt you.
+            </p>
+            <div class="hero-badges">
+              <div class="badge"><span class="badge-dot"></span> Business: buy cheaper, sell higher</div>
+              <div class="badge"><span class="badge-dot"></span> Science: hypotheses, data, experiments</div>
+              <div class="badge"><span class="badge-dot"></span> Arts: text, music, visuals</div>
+            </div>
+            <div class="hero-actions">
+              <a href="#cta" class="btn">Request your angel</a>
+              <a href="https://github.com/qqewq/Angel-in-Pocket-2.0" class="btn btn-outline" target="_blank">Open code on GitHub</a>
+            </div>
+            <p class="hero-note">
+              The phrase and vision of a “pocket angel” personal AI have already been discussed publicly by Garrett Johnston. Angel‑in‑Pocket 2.0 is my open‑source implementation of that public idea as an actual architecture, with modules, a GRA backend and concrete code.
+            </p>
+          </div>
+          <div>
+            <div class="hero-card">
+              <div class="hero-card-title">
+                Your daily moment of truth
+                <span class="hero-chip"><span class="badge-dot"></span> GRA stability</span>
+              </div>
+              <div class="hero-card-grid">
+                <div>
+                  <strong>Business</strong><br>
+                  ▸ Pricing and margins<br>
+                  ▸ Subscriptions and retention<br>
+                  ▸ Tactics and strategy
+                </div>
+                <div>
+                  <strong>Intelligence</strong><br>
+                  ▸ Symbolic logic<br>
+                  ▸ Neural models<br>
+                  ▸ Personal ethics and style
+                </div>
+                <div>
+                  <strong>Science</strong><br>
+                  ▸ Data and experiments<br>
+                  ▸ Hypotheses and models<br>
+                  ▸ Active learning
+                </div>
+                <div>
+                  <strong>Arts</strong><br>
+                  ▸ Text and poetry<br>
+                  ▸ Music and visuals<br>
+                  ▸ Aesthetic metrics
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="plan">
-          <div class="plan-title">Pro</div>
-          <div class="plan-price">от X ₽ / X $ / X⭐</div>
-          <div class="plan-note">Подписка для регулярной работы</div>
-          <ul class="plan-list">
-            <li>Расширенные лимиты, быстрые ответы, приоритетные модели.</li>
-            <li>Оплата внутри Telegram Stars или внешними платежами (карта МИР / другие карты / крипта). [web:155][web:189][web:192][web:168]</li>
-            <li>Автопродление и напоминания о списаниях.</li>
-          </ul>
-        </div>
-        <div class="plan">
-          <div class="plan-title">Team / API</div>
-          <div class="plan-price">по запросу</div>
-          <div class="plan-note">Для проектов и интеграций</div>
-          <ul class="plan-list">
-            <li>Несколько пользователей, общие карманы и общий контекст.</li>
-            <li>Веб‑хуки для подключения вашего биллинга и CI/CD.</li>
-            <li>Поддержка при внедрении и настройке пайплайна.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" data-lang="ru">
-      <h2>FAQ</h2>
-      <div class="faq-item">
-        <div class="faq-q">Когда заработает Telegram‑бот?</div>
-        <div class="faq-a">
-          Как только мы стабильно обойдём блокировки и закончим базовую конфигурацию, бот будет открыт по ссылке из этого лендинга. Пока кнопка — заглушка.
+      <section id="benefits">
+        <div class="container">
+          <h2 class="section-title">What your angel does every day</h2>
+          <p class="section-subtitle">
+            One agent, three jobs: help you earn, help you understand and help you create. All of this comes from a transparent architecture, not magic.
+          </p>
+          <div class="grid-3">
+            <div class="card">
+              <h3>Earn more</h3>
+              <p>The angel looks for “buy cheaper, sell higher” scenarios, proposes subscription tiers and shows which products actually drive profit.</p>
+              <ul>
+                <li>Pricing, demand and margin analysis</li>
+                <li>Subscriptions with MRR/ARR and churn</li>
+                <li>Focus on scenarios with real upside</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Understand deeper</h3>
+              <p>The scientific layer behaves like a researcher: designs experiments, tests hypotheses, explains results and stores knowledge in a structured way.</p>
+              <ul>
+                <li>Automated experiment design</li>
+                <li>Symbolic regression and data analysis</li>
+                <li>Human‑readable reports and summaries</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Create stronger</h3>
+              <p>The creative layer helps you write, compose and design so that your work is not only beautiful, but aligned with the mood and goal you set.</p>
+              <ul>
+                <li>Text, poetry and narratives</li>
+                <li>Music and color palettes</li>
+                <li>Aesthetic loss functions for quality</li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Можно ли будет платить картой МИР Сбера?</div>
-        <div class="faq-a">
-          Да. Планируется подключение платёжного провайдера, который принимает карты МИР и другие российские карты.
-          После оплаты ваш доступ в боте просто активируется автоматически. [web:189][web:192]
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Можно ли платить без Telegram?</div>
-        <div class="faq-a">
-          Да. Вы сможете оплатить подписку на внешней странице (карта МИР / карты / крипта), а бот просто увидит, что у вашего аккаунта активен доступ. [web:159][web:168]
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section center" data-lang="ru">
-      <h2>Заберите своего AI‑ангела, как только он проснётся</h2>
-      <p class="muted">
-        Сейчас идёт техническая сборка и обход блокировок. Сохраните эту страницу или подпишитесь на новости продукта, чтобы не пропустить запуск.
-      </p>
-      <p>
-        <a href="#" class="btn btn-primary" data-i18n="btn_telegram">
-          Скоро в Telegram
-        </a>
-      </p>
-      <p class="muted">
-        Хотите поддержать разработку — оплатите будущую подписку картой МИР или другой картой по кнопке выше. [web:189][web:192]
-      </p>
-    </section>
+      <section id="domains">
+        <div class="container">
+          <div class="divider"></div>
+          <h2 class="section-title">One angel, four domains</h2>
+          <p class="section-subtitle">
+            Angel‑in‑Pocket 2.0 sees money, processes, knowledge and creativity as parts of a single system. You stop living in separate spreadsheets and chats.
+          </p>
+          <div class="grid-3">
+            <div class="card">
+              <h3>Business & Finance</h3>
+              <p>Modules for sales, marketing, accounting and taxes. The angel knows your P&L and suggests which branches of your business model should be pruned.</p>
+              <span class="pill">CRM · funnel · reporting</span>
+            </div>
+            <div class="card">
+              <h3>Science & Production</h3>
+              <p>A layer for experiments, data, cost and production. The angel sees the real economics of your processes, not just revenue.</p>
+              <span class="pill">data · experiments · unit economics</span>
+            </div>
+            <div class="card">
+              <h3>Arts & Content</h3>
+              <p>Creation and curation of text, music and visuals. The angel can act as co‑author, editor or art director while staying inside your values.</p>
+              <span class="pill">copy · music · visual</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <!-- EN SECTIONS -->
-    <section class="section" data-lang="en" style="display:none;">
-      <h2>Who Angel‑in‑Pocket is for</h2>
-      <div class="features">
-        <div class="feature">
-          <h3>Developers & researchers</h3>
-          <p>Fast experiments with a personal RU/EN assistant: your prompts, your datasets, your metrics. Easy to plug into any stack.</p>
+      <section id="gra">
+        <div class="container">
+          <div class="divider"></div>
+          <h2 class="section-title">GRA stability: why pruning matters</h2>
+          <p class="section-subtitle">
+            Most AI systems generate ideas easily, but rarely know how to discard bad ones. The GRA layer evaluates scenarios, looks for contradictions and removes branches whose risk outweighs their benefit.
+          </p>
+          <div class="grid-3">
+            <div class="card">
+              <h3>Scenario evaluation</h3>
+              <p>Strategies, hypotheses and campaigns are passed through GRA‑Core. The system looks for weaknesses before you launch.</p>
+              <ul>
+                <li>Hierarchical stability metrics</li>
+                <li>Ranking alternative branches</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Pruning and rebuilding</h3>
+              <p>Unstable scenarios are pruned and rebuilt. The angel learns from mistakes and gradually keeps only strong decisions.</p>
+              <ul>
+                <li>Removing unstable branches</li>
+                <li>Rebuilding with experience</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Transparent decisions</h3>
+              <p>Every major decision can be explained: which data was used, which metrics mattered, and why this branch was considered stable.</p>
+              <ul>
+                <li>Stability reports</li>
+                <li>Logic that humans can follow</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="feature">
-          <h3>Founders & solo makers</h3>
-          <p>Ideas, hypotheses, landing pages, investor emails — in one “pocket” that remembers your context instead of losing it in chats.</p>
-        </div>
-        <div class="feature">
-          <h3>Writers & analysts</h3>
-          <p>Long‑form drafts, reports, summaries, translations. The assistant helps you think instead of just “spitting out boilerplate text”.</p>
-        </div>
-        <div class="feature">
-          <h3>Small teams</h3>
-          <p>A shared AI‑angel for chats, quick drafts, task summaries and lightweight integrations with your tools.</p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" data-lang="en" style="display:none;">
-      <h2>What you get with the subscription</h2>
-      <div class="features">
-        <div class="feature">
-          <h3>RU / EN bilingual</h3>
-          <p>The assistant understands Russian and English, replies in the user’s language and handles mixed conversations just fine.</p>
-        </div>
-        <div class="feature">
-          <h3>Memory & “pockets”</h3>
-          <p>Angel‑in‑Pocket does not live “one message at a time”. It has project pockets that remember your context, notes and intermediate conclusions.</p>
-        </div>
-        <div class="feature">
-          <h3>Flexible subscriptions</h3>
-          <p>You can pay inside Telegram with Stars, with Russian cards (incl. MIR) via acquiring, or with crypto — one logic, multiple payment rails. [web:155][web:189][web:192][web:168]</p>
-        </div>
-        <div class="feature">
-          <h3>Ready Telegram interface</h3>
-          <p>A full‑blown Telegram bot with billing and external payment events support. No need to reinvent messenger UX. [web:155][web:160]</p>
-        </div>
-      </div>
-    </section>
+      <section id="pricing">
+        <div class="container">
+          <div class="divider"></div>
+          <h2 class="section-title">Access and paid subscription</h2>
+          <p class="section-subtitle">
+            The base layer is open‑source: you can read the code, fork the repo and build your own variant. A paid subscription for Angel‑in‑Pocket 2.0 is planned, but not active yet; until launch, access is handled manually.
+          </p>
+          <div class="pricing">
+            <div>
+              <div class="label-soft">Base level</div>
+              <div class="price-tag">Open‑Source access</div>
+              <p class="section-subtitle">
+                The core central agent architecture is available for free as a GitHub repository. You can fork, modify and extend it for your own use cases.
+              </p>
+              <div class="list-inline">
+                <span>✓ GitHub repository</span>
+                <span>✓ docs and examples</span>
+                <span>✓ room for custom extensions</span>
+              </div>
 
-    <section class="section" data-lang="en" style="display:none;">
-      <h2>How subscriptions will work</h2>
-      <p>
-        Angel‑in‑Pocket is intentionally not locked to a single payment provider. Inside Telegram it uses built‑in payments and Star subscriptions,
-        outside — webhooks from your payment provider or crypto gateway. For the user it’s just a choice: “pay in Telegram” or “pay outside”. [web:155][web:160][web:159][web:168]
-      </p>
-
-      <div class="plans">
-        <div class="plan">
-          <div class="plan-title">Free</div>
-          <div class="plan-price">0 ₽ / 0 $</div>
-          <div class="plan-note">Try without risk</div>
-          <ul class="plan-list">
-            <li>Limited requests and context.</li>
-            <li>Access to core assistant features.</li>
-            <li>Will be activated in one tap once the bot is live.</li>
-          </ul>
+              <div class="divider"></div>
+              <div class="label-soft">Paid subscription (stub)</div>
+              <div class="price-tag">Angel‑in‑Pocket Pro</div>
+              <p class="section-subtitle">
+                A paid subscription with additional modules, infrastructure and support is planned. Right now the subscription is not live: onboarding is handled manually by request.
+              </p>
+              <div class="list-inline">
+                <span>✓ priority support (after launch)</span>
+                <span>✓ business‑specific customization</span>
+                <span>✓ dedicated environments and integrations</span>
+              </div>
+              <p class="stub">
+                Subscription is not active yet. This block is a placeholder: pricing and automatic billing will only appear after an official launch.
+              </p>
+            </div>
+            <div class="form-card" id="cta">
+              <h3>Request a demo</h3>
+              <p>Fill in the form and I’ll show how the angel can connect to your business, project or lab.</p>
+              <form>
+                <div class="form-group">
+                  <label for="name-en">Name</label>
+                  <input id="name-en" type="text" name="name" placeholder="How should I address you?">
+                </div>
+                <div class="form-group">
+                  <label for="contact-en">Email or Telegram</label>
+                  <input id="contact-en" type="text" name="contact" placeholder="Best contact channel">
+                </div>
+                <div class="form-group">
+                  <label for="about-en">What do you work on?</label>
+                  <textarea id="about-en" name="about" placeholder="Briefly: business, science, creativity — or all of them."></textarea>
+                </div>
+                <button type="submit" class="btn" style="width:100%;margin-top:6px;">Send request</button>
+                <div class="form-note">
+                  The form is not wired to a specific backend. Connect your own handler (email, CRM, bot) depending on your stack.
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        <div class="plan">
-          <div class="plan-title">Pro</div>
-          <div class="plan-price">from X ₽ / X $ / X⭐</div>
-          <div class="plan-note">For regular work</div>
-          <ul class="plan-list">
-            <li>Higher limits, faster replies, priority models.</li>
-            <li>Pay with Telegram Stars or via external payments (MIR / other cards / crypto). [web:155][web:189][web:192][web:168]</li>
-            <li>Auto‑renewal and billing reminders.</li>
-          </ul>
-        </div>
-        <div class="plan">
-          <div class="plan-title">Team / API</div>
-          <div class="plan-price">on request</div>
-          <div class="plan-note">For projects and integrations</div>
-          <ul class="plan-list">
-            <li>Multiple users, shared pockets and shared context.</li>
-            <li>Webhooks to plug into your billing and CI/CD.</li>
-            <li>Support with rollout and pipeline setup.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" data-lang="en" style="display:none;">
-      <h2>FAQ</h2>
-      <div class="faq-item">
-        <div class="faq-q">When will the Telegram bot be available?</div>
-        <div class="faq-a">
-          As soon as we stabilize the blocking bypass and finish the core configuration, the bot will be available via the button on this page. For now the button is a placeholder.
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Can I pay with a Russian MIR card?</div>
-        <div class="faq-a">
-          Yes. We plan to connect a payment provider that accepts MIR and other Russian cards.
-          Once you pay, your access in the bot will be activated automatically. [web:189][web:192]
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Can I pay without using Telegram at all?</div>
-        <div class="faq-a">
-          Yes. You will be able to pay on an external page (MIR / other cards / crypto), and the bot will just see your subscription as active. [web:159][web:168]
-        </div>
-      </div>
-    </section>
-
-    <section class="section center" data-lang="en" style="display:none;">
-      <h2>Grab your AI angel as soon as it wakes up</h2>
-      <p class="muted">
-        We’re currently building the tech and bypassing local restrictions. Bookmark this page or subscribe to product updates not to miss the launch.
-      </p>
-      <p>
-        <a href="#" class="btn btn-primary" data-i18n="btn_telegram">
-          Coming soon on Telegram
-        </a>
-      </p>
-      <p class="muted">
-        Want to support development — pre‑pay your future subscription with MIR or another card via the button above. [web:189][web:192]
-      </p>
-    </section>
+      </section>
+    </div>
   </main>
 
   <footer>
-    <div>© <span id="year"></span> Angel‑in‑Pocket</div>
-    <div><a href="https://github.com/qqewq/Angel-in-Pocket" target="_blank" rel="noopener">Исходники на GitHub</a></div>
+    <div class="container">
+      Angel‑in‑Pocket 2.0 · open‑source architecture for a central AI agent with GRA stability · Built for people who want money, knowledge and creativity in one stable system.
+    </div>
   </footer>
-</div>
 
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+  <script>
+    const langButtons = document.querySelectorAll('.lang-btn');
+    const langBlocks = {
+      ru: document.getElementById('lang-ru'),
+      en: document.getElementById('lang-en')
+    };
 
-  function setLang(lang) {
-    document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
-    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-
-    document.querySelectorAll('[data-lang]').forEach(function (el) {
-      el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        // toggle buttons
+        langButtons.forEach(b => b.classList.toggle('active', b === btn));
+        // toggle blocks
+        Object.keys(langBlocks).forEach(key => {
+          langBlocks[key].classList.toggle('active', key === lang);
+        });
+      });
     });
-
-    if (lang === 'ru') {
-      document.querySelector('[data-i18n="tagline"]').textContent =
-        'Персональный RU/EN AI‑ангел с гибкой подпиской';
-      document.querySelector('[data-i18n="badge_ai"]').textContent = 'RU / EN AI‑ассистент';
-      document.querySelector('[data-i18n="badge_where"]').textContent = 'Телеграм‑бот + веб';
-      document.querySelector('[data-i18n="badge_pay"]').textContent = 'Подписка: Stars, карта МИР, крипта';
-      document.querySelector('[data-i18n="hero_title"]').textContent =
-        'Персональный AI‑ангел, который работает там, где удобно вам';
-      document.querySelector('[data-i18n="hero_sub"]').textContent =
-        'Angel‑in‑Pocket — билингвальный ассистент на RU/EN, который живёт в Telegram и веб‑интерфейсе, помнит ваш контекст и продаётся по подписке: внутри Telegram Stars или через внешнюю оплату картой (включая МИР Сбера) и криптой.';
-      document.querySelectorAll('[data-i18n="btn_telegram"]').forEach(function (btn) {
-        btn.textContent = 'Скоро в Telegram';
-      });
-      document.querySelector('[data-i18n="btn_external"]').textContent =
-        'Оплатить картой МИР / картой';
-      document.querySelector('[data-i18n="hero_note"]').textContent =
-        'Сейчас мы собираем список раннего доступа. На старте вы сможете платить как внутри Telegram (Stars), так и внешними платежами: картой МИР Сбера, другими картами и криптой — в зависимости от вашего платёжного провайдера.';
-      document.querySelector('[data-i18n="hero_card_title"]').textContent =
-        'Как это будет работать';
-      document.querySelector('[data-i18n="hero_pill_ru"]').textContent = 'RU / ₽ / МИР / Stars';
-      document.querySelector('[data-i18n="hero_pill_en"]').textContent = 'EN / $ / € / Crypto';
-      document.querySelector('[data-i18n="hero_card_text"]').textContent =
-        'Вы выбираете, где платить: прямо в Telegram (Stars) или через внешний платёж (карта МИР Сбера, другие карты, крипта). Angel‑in‑Pocket просто видит, что ваша подписка активна, и даёт полный доступ к функциям.';
-    } else {
-      document.querySelector('[data-i18n="tagline"]').textContent =
-        'Personal RU/EN AI angel with flexible subscriptions';
-      document.querySelector('[data-i18n="badge_ai"]').textContent = 'RU / EN AI assistant';
-      document.querySelector('[data-i18n="badge_where"]').textContent = 'Telegram bot + web';
-      document.querySelector('[data-i18n="badge_pay"]').textContent = 'Subscriptions: Stars, MIR card, crypto';
-      document.querySelector('[data-i18n="hero_title"]').textContent =
-        'A personal AI angel that works where you do';
-      document.querySelector('[data-i18n="hero_sub"]').textContent =
-        'Angel‑in‑Pocket is a bilingual RU/EN assistant that lives in Telegram and on the web, remembers your context and is sold via subscriptions: Telegram Stars inside the app or external card payments (including Russian MIR) and crypto.';
-      document.querySelectorAll('[data-i18n="btn_telegram"]').forEach(function (btn) {
-        btn.textContent = 'Coming soon on Telegram';
-      });
-      document.querySelector('[data-i18n="btn_external"]').textContent =
-        'Pay with MIR / bank card';
-      document.querySelector('[data-i18n="hero_note"]').textContent =
-        'We are collecting early‑access requests. At launch you’ll be able to pay both inside Telegram (Stars) and via external payments: Russian MIR cards, other cards and crypto — depending on your payment provider.';
-      document.querySelector('[data-i18n="hero_card_title"]').textContent =
-        'How it will work';
-      document.querySelector('[data-i18n="hero_pill_ru"]').textContent = 'RU / ₽ / MIR / Stars';
-      document.querySelector('[data-i18n="hero_pill_en"]').textContent = 'EN / $ / € / Crypto';
-      document.querySelector('[data-i18n="hero_card_text"]').textContent =
-        'You choose where to pay: directly in Telegram (Stars) or via an external payment (Russian MIR, other cards, crypto). Angel‑in‑Pocket simply sees your subscription as active and unlocks all features.';
-    }
-  }
-</script>
+  </script>
 </body>
 </html>
